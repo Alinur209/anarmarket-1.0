@@ -8,7 +8,7 @@ import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../
 import { getFeaturedProduct, getProduct } from '../../../Store/reducers/productReducer';
 import { useSearchParams } from 'react-router-dom';
 
-export const FrameSiderBar = ({max_price, title}) => {
+export const FrameSiderBar = ({max_price, min_price, dataLength, title}) => {
     const loading = useSelector(state => state.products.isLoading)
     const dispatch = useDispatch()
     const [fromState, setFromState] = useState(0)
@@ -37,13 +37,13 @@ export const FrameSiderBar = ({max_price, title}) => {
         let new_params = makeGoodParams([...params].filter(item => item.type !== "max_price" && item.type !== "min_price"))
         dispatch(getFeaturedProduct(titleConverterToItsPath(title), new_params))
         setToState(max_price)
-        setFromState(0)
+        setFromState(min_price)
     }
 
     useEffect(() => {
         setToState(max_price)
-        setFromState(0)
-    }, [max_price, searchQuery])
+        setFromState(min_price)
+    }, [max_price, min_price])
 
   return (
     <SFrameSiderBar>
@@ -51,25 +51,25 @@ export const FrameSiderBar = ({max_price, title}) => {
             <Flex width="100%" justify="space-between">
                 <SliderTitle>Цена</SliderTitle>
                 {
-                    (fromState !== 0 || toState !== max_price) && <ResetBtn onClick={handleReset}><span>&times;</span>cбросить</ResetBtn>
+                    (title && (fromState !== min_price || toState !== max_price)) && <ResetBtn onClick={handleReset}><span>&times;</span>cбросить</ResetBtn>
                 }
             </Flex>
             <SliderAreaLabels>  
                 <Label>{fromState} - {toState}+</Label>
             </SliderAreaLabels>
             <SliderBars>
-                <ConfigurePrice>{0}</ConfigurePrice>
+                <ConfigurePrice>{min_price}</ConfigurePrice>
                 <ConfigurePrice>{middlePrice}</ConfigurePrice>
                 <ConfigurePrice>{max_price}</ConfigurePrice>
             </SliderBars>
             <Slider 
                     key={`slider-${title}`}
-                    min={0}
+                    min={min_price}
                     max={max_price}    
                     value={[fromState, toState]}
                     onChange={onSliderChange}
-                    valueLabelDisplay="auto"
                     onChangeCommitted={handleAfterChange}
+                    disabled={loading || !dataLength}
             />
         </Wrapper>
     </SFrameSiderBar>

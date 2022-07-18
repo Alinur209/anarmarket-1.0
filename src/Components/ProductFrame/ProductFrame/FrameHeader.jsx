@@ -34,7 +34,7 @@ export const FrameHeader = ({title, dataLength}) => {
             <HeaderRight>
                 <Sorting>
                 <SortTitle>Сортировать:</SortTitle>
-                    <FormControl disabled={loading} sx={{ m: 1, minWidth: 220 }}>
+                    <FormControl disabled={loading || !dataLength} sx={{ m: 1, minWidth: 220 }}>
                         <Select
                             value={selectValue}
                             onChange={handleSelectChange}

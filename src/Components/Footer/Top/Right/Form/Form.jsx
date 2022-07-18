@@ -1,21 +1,32 @@
 import React, {useState} from 'react'
 import styled from 'styled-components'
-import Flex from '../../../../../UI/Flex'
+import { notification } from 'antd';
+import API from '../../../../../API/API';
 
 export const Form = () => {
-  const [fields, setFields] = useState({name: "", phone: "+996", message: ""})
+  const [fields, setFields] = useState({name: "", phone: "", message: ""})
 
-  const handleSubmit = e => {
+  const openNotification = (desc) => {
+    notification.open({
+      message: 'Сообщение отправлено',
+      description:desc,
+    })
+  }
+
+  const handleSubmit = async e => {
     e.preventDefault()
-    console.log(fields)
+
+      setFields({name: '', phone: '', message: ''})
+      openNotification(fields.message)
+      API.send_notify(fields)
   }
 
   return (
     <SForm onSubmit={handleSubmit}>
-        <Input onChange={e => setFields({...fields, name: e.target.value})} value={fields.name} placeholder='Имя' />
-        <Input onChange={e => setFields({...fields, phone: e.target.value})}value={fields.phone} placeholder='+996'/>
-        <MsgField onChange={e => setFields({...fields, message: e.target.value})} value={fields.message} placeholder='Сообщение'/>
-        <Btn type="submit">Отправить</Btn>
+        <Input required onChange={e => setFields({...fields, name: e.target.value})} value={fields.name} placeholder='Имя' />
+        <Input required onChange={e => setFields({...fields, phone: e.target.value})}value={fields.phone} placeholder='+996'></Input>
+        <MsgField required onChange={e => setFields({...fields, message: e.target.value})} value={fields.message} placeholder='Сообщение'/>
+        <Btn type="submit" onSubmit={handleSubmit}>Отправить</Btn>
     </SForm>
   )
 }
@@ -45,10 +56,18 @@ const Input = styled.input`
     border-radius: 5px;
     background: #2A3B45;
 `
-const MsgField = styled(Input)`
+const MsgField = styled.textarea`
   grid-column-start: 1;
   grid-column-end:3;
   padding-bottom: 115px;
+  border:none;
+  outline: none;
+  font-size: 16px;
+  color: #fff;
+  padding: 8px 15px;
+  border-radius: 5px;
+  background: #2A3B45;
+  min-height: 150px
 `
 const SForm = styled.form`
     display: grid;

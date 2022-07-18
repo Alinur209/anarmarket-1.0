@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Source+Sans+Pro:wght@400;700&display=swap');
-/* @import 'antd/dist/antd.css'; */
+@import 'antd/dist/antd.css';
+@import "./burger-menu.css";
 
 * {
     padding: 0;
@@ -44,4 +45,12 @@ a {
 }
 .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-selected {
     background-color: #F9C535 !important;
+}
+.MuiSelect-select {
+    border-top: 1px solid #000 !important;
+}
+/* ---  */
+
+.custom-dot-list-style-carousel {
+    display:none
 }

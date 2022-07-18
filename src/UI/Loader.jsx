@@ -2,54 +2,25 @@ import React from 'react'
 import styled from 'styled-components'
 import { Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
+import Flex from './Flex';
 
-export const Loader = ({size = "meduim", type}) => {
-    const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />;
-
-    if(type === "full") {
-        return (
-            <FullLoader>
-                <Overlay></Overlay>
-                <SpinnterWrapper>
-                    <Spinner indicator={antIcon} />
-                </SpinnterWrapper>
-            </FullLoader>
-        )
-    }
+export const Loader = ({size = "large", type, SkeletonComponent}) => {
+  const antIcon = <LoadingOutlined style={{ fontSize: 48 }} spin />
+    
   return (
-    <SLoader size={size} >Loader</SLoader>
+      <Wrapper>
+        <SLoader indicator={antIcon} size={size}/>
+      </Wrapper>
   )
 }
 
-const SpinnterWrapper = styled.div`
-    border-radius: 5px;
-    width: 200px;
-    height: 200px;
-    background: #fff
-`
-const Spinner = styled(Spin)`
-    color: #000;
-    span {
-        font-size: 48px !important;
-    }
-`
-const Overlay = styled.div`
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    filter: blur(4px);
-`
-const FullLoader = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    min-width: 100%;
-    min-height: 100%;
-    display: flex;
+const Wrapper = styled(Flex)`
+    width: 100%;
+    height: 100px;
     justify-content:center;
     align-items:center;
-    z-index: 999;
 `
-const SLoader = styled.div`
+const SLoader = styled(Spin)`
+    color: #334854;
+`
 
-`

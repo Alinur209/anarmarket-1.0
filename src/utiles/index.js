@@ -1,12 +1,26 @@
 
+
+
+
 // LOCAL STORAGE
 
 import { useLocation } from "react-router-dom"
 import { navlist } from "../Components/Sticky_header/NavList/NavList"
 
+
+
 export const getLocalStorage = (key) => JSON.parse(localStorage.getItem(key))
 export const removeLocalStorage = (key = "session") => localStorage.removeItem(key)
 export const setLocalStorage = (value, key = "session") => localStorage.setItem(key, JSON.stringify(value))
+
+// ERROR
+
+export class ErrorCreator {
+    constructor(err_code, message) {
+        this.err_code = err_code
+        this.message = message
+    }
+}
 
 // PATH
 
@@ -68,3 +82,7 @@ export const makeGoodParams = arr => {
 }
 
 
+
+// FOOTER 
+
+export const phoneFieldValidator = field => Boolean(Number(field))

@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import Flex from '../../../UI/Flex'
-import inst from '../../../Media/Footer/instIcon.svg'
+import inst from '../../../Media/Footer/instagram (2) 1.svg'
 
 export const Bottom = () => {
   return (
@@ -26,10 +26,10 @@ const InstText = styled.span`
     color: #fff;
 `
 const Icon = styled.div`
-    width: 35px;
-    height: 35px;
-    background: #EFECEA;
-    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    background: #BF1C3E;
+    border-radius: 100px;
     display: flex;
     justify-content:center;
     align-items:center;
