@@ -75,4 +75,7 @@ const SForm = styled.form`
     gap: 20px;
     margin-top: 10px;
     grid-template-columns: 1fr 3fr;
+    @media (max-width: 972px) {
+      width: 50%;
+    }
 `

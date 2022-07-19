@@ -19,6 +19,7 @@ export const LogoSection = () => {
 }
 
 const Description = styled.p`
+  max-width: 450px;
     margin: 0;
     font-size: 16px;
     color: #fff;
@@ -27,4 +28,16 @@ const Description = styled.p`
 const SLogoSection = styled(Flex)`
     flex-direction:column;
     gap: 20px;
+    @media (max-width: 1156px) {
+      width: 100%;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+    };
+    @media (max-width: 972px) {
+      display:flex;
+      flex-direction: column;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 `

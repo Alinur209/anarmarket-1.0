@@ -8,7 +8,7 @@ const ContentTemple = (props) => {
 }
 
 const SContentTemple = styled.div`
-  width: 100%;
+  min-width: 100%;
   max-width: 1200px;
   height: 100%;
   padding: ${({padding}) => padding || "0 50px 0 50px;"};

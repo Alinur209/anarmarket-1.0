@@ -5,18 +5,15 @@ import Slider from '@mui/material/Slider';
 import { useSelector } from 'react-redux'
 import {useDispatch} from 'react-redux'
 import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles';
-import { getFeaturedProduct, getProduct } from '../../../Store/reducers/productReducer';
-import { useSearchParams } from 'react-router-dom';
+import { getFeaturedProduct } from '../../../Store/reducers/productReducer';
 
-export const FrameSiderBar = ({max_price, min_price, dataLength, title}) => {
+export const FrameSiderBar = ({max_price = 0, min_price = 0, dataLength, title}) => {
     const loading = useSelector(state => state.products.isLoading)
     const dispatch = useDispatch()
     const [fromState, setFromState] = useState(0)
     const [toState, setToState] = useState(0)
-    const middlePrice = useMemo(() => max_price ? Math.round(max_price / 2):'', [max_price])
+    const middlePrice = useMemo(() => max_price ? Math.round(max_price / 2):0, [max_price])
     const params = useSelector(state => state.products.params)
-    const [searchParams] = useSearchParams()
-    const searchQuery = searchParams.get("q")
     
     const onSliderChange = e => {   
         setToState(e.target.value[1])

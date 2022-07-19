@@ -52,4 +52,9 @@ const Icon = styled.li`
 const SIcons = styled(Flex)`
     flex-direction:column; 
     gap: 10px;
+
+    @media(max-width: 1156px){
+        height: 100%;
+        justify-content:center;
+    }
 `

@@ -27,7 +27,7 @@ export const NavList = () => {
 
   return (
     <>
-      <SNavList>
+      <SNavList isMatch>
         {
               navlist.map(link => 
                 <Li key={link.path}>
@@ -60,6 +60,9 @@ const SNavList = styled(Flex)`
   gap: 20px;
   height: 100%;
   align-items: center;
+  ${props => props.isMatch && css`
+    display:none
+  `}
 `
 
 const Li = styled.li`

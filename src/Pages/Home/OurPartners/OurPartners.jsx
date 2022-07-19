@@ -18,7 +18,7 @@ export const OurPartners = () => {
         <Title>Наши клиенты</Title>
         {
             loading ? 
-                <Flex justify="space-between" wrap width="100%">  
+                <Flex justify="space-between" wrap={"true"} width="100%">  
                     {Array.from(new Array(4)).map((item, index) => 
                         <Flex key={index} direction="column" gap="15px" align="center">
                             <Skeleton variant="circular" width={150} height={150} />
