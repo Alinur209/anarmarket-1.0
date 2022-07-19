@@ -27,21 +27,14 @@ export const NavList = () => {
 
   return (
     <>
-      <BurgerBody isOpen={isToggle}>
-        body
-      </BurgerBody>
-    
       <SNavList>
-          {
-            isMatch ?
-              <SHamburger color="#334854" rounded toggle={setIsToggle} toggled={isToggle} />
-            :
+        {
               navlist.map(link => 
                 <Li key={link.path}>
                   <Link key={link.title} to={"/" + link.path}>{link.title}</Link>
                 </Li>
               )
-          }
+        }
       </SNavList>
     </>
   )
