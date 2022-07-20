@@ -29,8 +29,7 @@ const PartnerName = styled.h3`
 `
 const PartnerPircture = styled.div`
     border-radius: 100px;
-    width: 150px;
-    height: 150px;
+    width: 7rem;
 
     img {
         width: 100%;
@@ -51,4 +50,9 @@ const SList = styled.ul`
     display:flex;
     flex-wrap:wrap;
     gap: 15px;
+
+    @media(max-width: 375px) {
+        width: 100%;
+        justify-content:center;
+    }
 `

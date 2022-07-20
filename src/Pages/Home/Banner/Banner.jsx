@@ -44,7 +44,6 @@ export const Banner = () => {
 
 const SCarousel = styled(Carousel)`
     width: 100%;
-    border-radius: 5px;
 `
 const Item = styled.div`
     background-image: ${({src}) =>  `url(${src})`};
@@ -57,5 +56,4 @@ const Item = styled.div`
 const SBanner = styled(Flex)`
     width: 100%;
     height: auto;
-    border-radius: 5px;
 `

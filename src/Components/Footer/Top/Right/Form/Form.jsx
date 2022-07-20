@@ -50,6 +50,13 @@ const Btn = styled.button`
       grid-column-start:1;
       grid-column-end:2;
     }
+    @media (max-width: 481px) {
+      width: 100%;
+    }
+    @media (max-width: 481px) {
+      grid-column-start:1;
+      grid-column-end:3;
+    }
 `
 const Input = styled.input`
     border:none;
@@ -59,6 +66,10 @@ const Input = styled.input`
     padding: 8px 15px;
     border-radius: 5px;
     background: #2A3B45;
+    @media (max-width: 481px) {
+      grid-column-start:1;
+      grid-column-end:3;
+    }
 `
 const MsgField = styled.textarea`
   grid-column-start: 1;
@@ -72,6 +83,7 @@ const MsgField = styled.textarea`
   border-radius: 5px;
   background: #2A3B45;
   min-height: 150px
+
 `
 const SForm = styled.form`
     display: grid;
@@ -81,5 +93,8 @@ const SForm = styled.form`
     grid-template-columns: 1fr 3fr;
     @media (max-width: 972px) {
       width: 50%;
+    }
+    @media (max-width: 481px) {
+      width: 100%;
     }
 `

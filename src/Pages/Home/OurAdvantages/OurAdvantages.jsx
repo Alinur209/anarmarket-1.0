@@ -75,8 +75,12 @@ const Item = styled.li`
 const Title = styled.h2`
     margin: 50px 0;
     width: 100%;
-    font-size: 32px;
+    font-size: 2rem;
     text-align:center;
+
+    @media(max-width: 481px) {
+        margin: 20px 0;
+    }
 `
 const SOurAdvantages= styled(Flex)`
     width: 100%;

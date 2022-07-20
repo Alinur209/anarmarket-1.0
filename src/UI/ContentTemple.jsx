@@ -16,18 +16,28 @@ const SContentTemple = styled.div`
   @media(max-width: 972px) {
     padding: 0 30px;
   };
+  @media(max-width: 481px) {
+    padding: 0 20px;
+  }
   ${props => props.pt && css`
     padding-top: 30px;
     @media(max-width: 972px) {
       padding-top: 30px;
     };
+    @media(max-width: 481px) {
+      padding-top: 30px;
+    }
   `}
   ${props => props.pb && css`
     padding-bottom: 30px;
     @media(max-width: 972px) {
       padding-bottom: 30px;
     };
+    @media(max-width: 481px) {
+      padding-bottom: 30px;
+    }
   `}
+
 `
 
 export default ContentTemple

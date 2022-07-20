@@ -49,7 +49,7 @@ export const ProductList = ({data, title}) => {
                 data.map((item, index) =>
                     <ProductCard key={index}>
                       <CardTop>
-                        <ProductPicture src={"http://localhost:8000" + item.product_image}/>
+                        <ProductPicture loading='lazy' src={"http://localhost:8000" + item.product_image}/>
                       </CardTop>
                       <CardBottom>
                         <CardTitle>{item.title.split('').slice(0, 20).join('')}{item.title.length >= 20 && "..."}</CardTitle>

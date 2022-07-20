@@ -29,6 +29,6 @@ const STop = styled.div`
       }
       @media(max-width: 860px) {
         display:flex;
-        flex-wrap: wrap;
+        flex-direction:column;
       }
 ` 

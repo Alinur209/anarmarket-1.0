@@ -41,6 +41,10 @@ const A = styled.a`
 const Value = styled.span`
     font-size: 16px;
     padding-left: 10px;
+
+    @media(max-width: 481px) {
+        font-size: 14px;
+    }
 `
 const Img = styled.img`
     width: 25px;
