@@ -30,6 +30,5 @@ const Content = styled(ContentTemple)`
 `
 const SFooter = styled.footer`
   width: 100%;
-
   background: #334854;
 `

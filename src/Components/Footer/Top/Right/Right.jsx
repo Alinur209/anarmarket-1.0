@@ -24,8 +24,8 @@ export const Right = () => {
 
 const Wrapper = styled.div`
   @media(max-width: 1156px) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+    display: flex;
+    flex-direction: column;
   }
   @media (max-width: 972px) {
     display:flex;

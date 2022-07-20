@@ -28,12 +28,12 @@ const Description = styled.p`
 const SLogoSection = styled(Flex)`
     flex-direction:column;
     gap: 20px;
-    @media (max-width: 1156px) {
-      width: 100%;
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-    };
+    // @media (max-width: 1156px) {
+    //   width: 100%;
+    //   display:grid;
+    //   grid-template-columns: 1fr 1fr;
+    //   gap: 0;
+    // };
     @media (max-width: 972px) {
       display:flex;
       flex-direction: column;

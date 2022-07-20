@@ -24,10 +24,11 @@ const STop = styled.div`
     grid-gap: 15px;
     padding-bottom: 20px;
 
-    ${props => props.isMatch && css`
       @media(max-width: 1156px) {
+        grid-template-columns: 1fr 1fr;
+      }
+      @media(max-width: 860px) {
         display:flex;
         flex-wrap: wrap;
       }
-    `}
 ` 

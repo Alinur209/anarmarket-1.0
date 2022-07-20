@@ -29,16 +29,10 @@ export const Banner = () => {
                     autoPlay={true}
                     transitionDuration={200}
                     indicators={false}
-                    fullHeightHover
                 >
                     {
                         banners.map((banner, index) => 
-                            <Item key={index}>
-                                <img 
-                                    src={"http://localhost:8000" + banner.img}        
-                                    alt=""
-                                />    
-                            </Item>
+                            <Item key={index} src={"http://localhost:8000" + banner.img} />
                         )
                     }
                 </SCarousel>    
@@ -50,18 +44,18 @@ export const Banner = () => {
 
 const SCarousel = styled(Carousel)`
     width: 100%;
-    height: 100%;
     border-radius: 5px;
 `
 const Item = styled.div`
-    img {
-        width: 100%;
-        height: 100%;
-        object-fit:contain;
-    }
+    background-image: ${({src}) =>  `url(${src})`};
+    background-size: contain;
+    background-position: background-position: left center;
+    background-repeat: no-repeat;
+    height: 40vw;
+    vertical-align:top
 `
 const SBanner = styled(Flex)`
     width: 100%;
-    height: 400px;
+    height: auto;
     border-radius: 5px;
 `

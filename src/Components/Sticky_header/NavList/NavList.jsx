@@ -21,13 +21,13 @@ export const navlist = [
 ]
 
 export const NavList = () => {
-  const isMatch = useMediaQuery("(max-width: 1180px)")
+  const isMatch = useMediaQuery("(max-width: 1156px)")
   
   const [isToggle, setIsToggle] = useState(false)
 
   return (
     <>
-      <SNavList isMatch>
+      <SNavList>
         {
               navlist.map(link => 
                 <Li key={link.path}>
@@ -60,9 +60,9 @@ const SNavList = styled(Flex)`
   gap: 20px;
   height: 100%;
   align-items: center;
-  ${props => props.isMatch && css`
+  @media(max-width: 1180px) {
     display:none
-  `}
+  }
 `
 
 const Li = styled.li`

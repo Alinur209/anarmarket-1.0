@@ -57,7 +57,7 @@ const Input = styled.input`
   border-right: none;
 `
 const SSearch = styled.form`
-  width: 400px;
+  width: 380px;
   height: 40px;
   display:flex;
 `

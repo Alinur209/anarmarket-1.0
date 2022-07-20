@@ -46,6 +46,10 @@ const Btn = styled.button`
     &:hover {
       background: #CA9F28
     }
+    @media (max-width: 860px) {
+      grid-column-start:1;
+      grid-column-end:2;
+    }
 `
 const Input = styled.input`
     border:none;
