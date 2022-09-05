@@ -13,7 +13,7 @@ export const ProductFrame = ({data, title}) => {
     <SProductFrame>
         <FrameHeader title={title} dataLength={data.max_length} />
         <Grid>
-            <FrameSiderBar  min_price={data.min_price} dataLength={data.max_length} max_price={data.max_price} title={title} />
+            <FrameSiderBar dataLength={data.max_length} max_price={data.max_price} title={title} />
             {
               data.list && (
               <ProductList title={title} data={data.list} />

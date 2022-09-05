@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useSearchParams, useNavigate, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import { useGetParams } from '../../../hooks/useGetParams'
 import search from '../../../Media/Sticky/Search.png'
 
 const Search = () => {
-  let [searchParams] = useSearchParams()
-  const [query, setQuery] = useState(searchParams.get("q")) || ''
+  // const searchQuery = useGetParams().find(item => item?.type === "search")?.input || ''
+  const [query, setQuery] = useState('')
   const navigate = useNavigate()
+
+
+  useEffect(() => {
+    setQuery('')
+  }, [])
 
   const handleSubmit = e => {
     e.preventDefault()
@@ -14,14 +20,10 @@ const Search = () => {
       navigate(`search/?q=${query}`)
     }
   }
-
-  useEffect(() => {
-    setQuery(searchParams.get("q") ? searchParams.get("q"): "")
-  }, [searchParams.toString()])
-
+  
   return (
     <SSearch onSubmit={handleSubmit} method='GET' action='/search/'>
-      <Input value={query ? query : ""} name={"q"} onChange={e => setQuery(e.target.value)} placeholder="Поиск по каталогу.." />
+      <Input value={query} name={"q"} onChange={e => setQuery(e.target.value)} placeholder="Поиск по каталогу.." />
       <SearchBtn onClick={handleSubmit} type="submit">
         <img src={search} alt=""/>
       </SearchBtn>
@@ -57,7 +59,7 @@ const Input = styled.input`
   border-right: none;
 `
 const SSearch = styled.form`
-  width: 380px;
+  width: 400px;
   height: 40px;
   display:flex;
 `

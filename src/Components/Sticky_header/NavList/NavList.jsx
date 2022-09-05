@@ -1,9 +1,8 @@
-import React, {useState} from 'react'
-import styled, {css} from 'styled-components'
+import React from 'react'
+import styled from 'styled-components'
 import {NavLink} from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
 import Flex from '../../../UI/Flex'
-import { Turn as Hamburger } from 'hamburger-react'
-import useMediaQuery from '../../../hooks/useMediaQueryHook'
 
 export const navlist = [
   {title: "Главная", path: ""},
@@ -21,49 +20,19 @@ export const navlist = [
 ]
 
 export const NavList = () => {
-  const isMatch = useMediaQuery("(max-width: 1156px)")
-  
-  const [isToggle, setIsToggle] = useState(false)
 
   return (
-    <>
-      <SNavList>
+    <SNavList>
         {
-              navlist.map(link => 
-                <Li key={link.path}>
-                  <Link key={link.title} to={"/" + link.path}>{link.title}</Link>
-                </Li>
-              )
+          navlist.map(link => 
+            <Li key={link.path}>
+              <Link key={link.title} to={"/" + link.path}>{link.title}</Link>
+            </Li>
+          )
         }
-      </SNavList>
-    </>
+    </SNavList>
   )
 }
-
-const SHamburger = styled(Hamburger)`
-  z-index: 1000
-`
-const BurgerBody = styled(Flex)`
-
-  position: absolute;
-  z-index: 999;
-  right: ${({isOpen}) => isOpen ? "0":"-100%"};
-  top: 0px;
-  width: 300px;
-  height: 100vh;
-  background: #334854;
-  box-shadow: 0 0 30px #334854;
-
-`
-
-const SNavList = styled(Flex)`
-  gap: 20px;
-  height: 100%;
-  align-items: center;
-  @media(max-width: 1180px) {
-    display:none
-  }
-`
 
 const Li = styled.li`
   list-style: none;
@@ -98,4 +67,9 @@ const Link = styled(NavLink)`
       opacity: 1; 
     }
   }
+`
+const SNavList = styled(Flex)`
+  gap: 20px;
+  height: 100%;
+  align-items: center;
 `

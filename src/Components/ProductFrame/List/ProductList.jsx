@@ -6,9 +6,10 @@ import { UnFound } from '../../../UI/UnFound'
 import {useSelector} from 'react-redux'
 import {Skeleton} from '@mui/material'
 import {useDispatch} from 'react-redux'
-import { getProduct, setProductLoadingTrue, setProductLoadingFalse } from '../../../Store/reducers/productReducer'
-import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles'
-import { Loader } from '../../../UI/Loader'
+import { getProduct, paginateProduct, setProductLoadingTrue, setProductLoadingFalse } from '../../../Store/reducers/productReducer'
+import { titleConverterToItsPath } from '../../../utiles'
+import { useSelect } from '@mui/base'
+import { useGetParams } from '../../../hooks/useGetParams'
 
 export const ProductList = ({data, title}) => {
   const dispatch = useDispatch()
@@ -17,42 +18,35 @@ export const ProductList = ({data, title}) => {
   const hasNext = useSelector(state => state.products.active.has_next)
   const lastElement = useRef()
   const observer = useRef()
+  const params = useGetParams(() => page + 1) || []
   const error = useSelector(state => state.products.error)
-  const params = useSelector(state => state.products.params)
-  // const [isFetching, setIsFetching ] = useState(false)
 
   useEffect(() => {
     if(isLoading) return
     if(observer.current) observer.current.disconnect()
-    var options = {
-      rootMargin: '0px 0px 150px 0px',
-    }
     var callback = function(entries, observer) {
       if(entries[0].isIntersecting && hasNext) {
-        let new_params = makeGoodParams([...params, 
-          new ParamCreator("page", page + 1)
-        ])
-        dispatch(getProduct(titleConverterToItsPath(title), new_params))
+        dispatch(getProduct(titleConverterToItsPath(title), params))
       }
     }
-    observer.current = new IntersectionObserver(callback, options)
+    observer.current = new IntersectionObserver(callback)
     observer.current.observe(lastElement.current)
 
-  }, [isLoading])
+  }, [isLoading, page, hasNext, title, params])
 
 
   return (
       <ContentTemple padding="10px 30px">
-        <SProductList isEmptyData={!isLoading && !data.length}>
+        <SProductList loading={isLoading} isEmptyData={!isLoading && !data.length}>
           {
               data.length ?
                 data.map((item, index) =>
                     <ProductCard key={index}>
                       <CardTop>
-                        <ProductPicture loading='lazy' src={"http://localhost:8000" + item.product_image}/>
+                        <ProductPicture src={"http://localhost:8000" + item.product_image}/>
                       </CardTop>
                       <CardBottom>
-                        <CardTitle>{item.title.split('').slice(0, 20).join('')}{item.title.length >= 20 && "..."}</CardTitle>
+                        <CardTitle>{item.title}</CardTitle>
                         <CardCost>{item.price} с/{item.measurment}</CardCost>
                       </CardBottom>
                     </ProductCard>  
@@ -61,11 +55,8 @@ export const ProductList = ({data, title}) => {
                 <UnFound />
           }
         </SProductList>
-        {
-           (isLoading && data.length) &&
-            <Loader />
-        }
         <div style={{height: "20px", width: "100%"}} ref={lastElement}></div>
+        <h1>{error}</h1>
       </ContentTemple>
   )
 }
@@ -113,4 +104,7 @@ const SProductList = styled.div`
   display:grid;
   grid-template-columns: ${props => props.isEmptyData ? '1fr': '1fr 1fr 1fr'};
   grid-gap: 10px;
+  ${props => props.loading && css`
+    opacity: 0.3
+  `}
 `

@@ -1,24 +1,20 @@
-@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;700&display=swap');
-@import 'antd/dist/antd.css';
-/* @import "./burger-menu.css"; */
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;700&family=Source+Sans+Pro:wght@400;700&display=swap');
+/* @import 'antd/dist/antd.css'; */
 
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: 'Ubuntu', sans-serif !important;
+    font-family: 'Source Sans Pro', sans-serif !important;
     font-weight: 400;
     transition-duration: 0.2s;
 }
-
 *::selection {
     background-color: #F9C535;
     color:#000
 }
 body {
     background-color: #fff;
-    min-width: 100%;
 }
 .ant-scroll-number-only-unit {
     color: #000;
@@ -48,17 +44,4 @@ a {
 }
 .css-kk1bwy-MuiButtonBase-root-MuiMenuItem-root.Mui-selected {
     background-color: #F9C535 !important;
-}
-.MuiSelect-select {
-    border-top: 1px solid #000 !important;
-}
-/* ---  */
-
-.custom-dot-list-style-carousel {
-    display:none
-}
-.css-1f8sh1y {
-    height: 40vw !important;
-    max-height: 400px !important;  
-
 }

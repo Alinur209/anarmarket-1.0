@@ -4,43 +4,40 @@ import Flex from '../../../UI/Flex'
 import Slider from '@mui/material/Slider';
 import { useSelector } from 'react-redux'
 import {useDispatch} from 'react-redux'
-import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles';
-import { getFeaturedProduct } from '../../../Store/reducers/productReducer';
+import { makeGoodParams, titleConverterToItsPath } from '../../../utiles';
+import { getProduct } from '../../../Store/reducers/productReducer';
+import { ParamCreator, useAddParams, useGetParams } from '../../../hooks/useGetParams';
 
-export const FrameSiderBar = ({max_price = 0, min_price = 0, dataLength, title}) => {
+export const FrameSiderBar = ({max_price, title}) => {
     const loading = useSelector(state => state.products.isLoading)
     const dispatch = useDispatch()
     const [fromState, setFromState] = useState(0)
     const [toState, setToState] = useState(0)
-    const middlePrice = useMemo(() => max_price ? Math.round(max_price / 2):0, [max_price])
-    const params = useSelector(state => state.products.params)
-    
-    const onSliderChange = e => {   
+    const params = useGetParams()
+    const middlePrice = useMemo(() => max_price ? Math.round(max_price / 2):'', [max_price])
+    const addParams = useAddParams()
+
+    const onSliderChange = e => {
         setToState(e.target.value[1])
         setFromState(e.target.value[0])
         
     }
 
     const handleAfterChange = () => {
-        let new_params = makeGoodParams([...params, 
-            new ParamCreator("min_price", fromState),  
-            new ParamCreator("max_price", toState 
-        )].filter(item => item.type !== "page")) 
-
-        dispatch(getFeaturedProduct(titleConverterToItsPath(title), new_params))
+        addParams([new ParamCreator("min_price", fromState), new ParamCreator("max_price", toState)])
+        dispatch(getProduct(title !== "Поиск" ? titleConverterToItsPath(title) : "products", params))
     }
     
     const handleReset = () => {
-        let new_params = makeGoodParams([...params].filter(item => item.type !== "max_price" && item.type !== "min_price"))
-        dispatch(getFeaturedProduct(titleConverterToItsPath(title), new_params))
+        dispatch(getProduct(title))
         setToState(max_price)
-        setFromState(min_price)
+        setFromState(0)
     }
 
     useEffect(() => {
         setToState(max_price)
-        setFromState(min_price)
-    }, [max_price, min_price])
+    }, [max_price])
+
 
   return (
     <SFrameSiderBar>
@@ -48,25 +45,25 @@ export const FrameSiderBar = ({max_price = 0, min_price = 0, dataLength, title})
             <Flex width="100%" justify="space-between">
                 <SliderTitle>Цена</SliderTitle>
                 {
-                    (title && (fromState !== min_price || toState !== max_price)) && <ResetBtn onClick={handleReset}><span>&times;</span>cбросить</ResetBtn>
+                    (fromState !== 0 || toState !== max_price) && <ResetBtn onClick={handleReset}><span>&times;</span>cбросить</ResetBtn>
                 }
             </Flex>
             <SliderAreaLabels>  
                 <Label>{fromState} - {toState}+</Label>
             </SliderAreaLabels>
             <SliderBars>
-                <ConfigurePrice>{min_price}</ConfigurePrice>
+                <ConfigurePrice>{0}</ConfigurePrice>
                 <ConfigurePrice>{middlePrice}</ConfigurePrice>
                 <ConfigurePrice>{max_price}</ConfigurePrice>
             </SliderBars>
             <Slider 
                     key={`slider-${title}`}
-                    min={min_price}
+                    min={0}
                     max={max_price}    
                     value={[fromState, toState]}
                     onChange={onSliderChange}
+                    valueLabelDisplay="auto"
                     onChangeCommitted={handleAfterChange}
-                    disabled={loading || !dataLength}
             />
         </Wrapper>
     </SFrameSiderBar>

@@ -1,38 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import useMediaQuery from '../../../../hooks/useMediaQueryHook'
 import Flex from '../../../../UI/Flex'
-import { InformationSection } from '../Left/InformationSection/Information'
 import { Form } from './Form/Form'
 
 export const Right = () => {
-  const isMatch = useMediaQuery("(max-width: 1156px)")
-
   return (
-    <Wrapper>
-      {
-        isMatch && <InformationSection />
-      }
-      <SRight>
+    <SRight>
         <Title>Что то еще?</Title>
         <Msg>Отправьте нам сообщение</Msg>
         <Form />
-      </SRight>
-    </Wrapper>
+    </SRight>
   )
 }
 
-const Wrapper = styled.div`
-  @media(max-width: 1156px) {
-    display: flex;
-    flex-direction: column;
-  }
-  @media (max-width: 972px) {
-    display:flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-  }
-`
 const Msg = styled.span`
     font-size: 16px;
     color: #fff;

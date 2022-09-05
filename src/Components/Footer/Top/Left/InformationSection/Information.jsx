@@ -3,10 +3,8 @@ import styled from 'styled-components'
 import Flex from '../../../../../UI/Flex'
 import circle from '../../../../../Media/Footer/clause.svg'
 import {Link} from 'react-router-dom'
-import useMediaQuery from '../../../../../hooks/useMediaQueryHook'
 
 export const InformationSection = () => {
-
   const list = [
     {path: '/about', text: "О нас"},
     // {path: '/blog', text: "Блог"},

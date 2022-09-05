@@ -6,24 +6,23 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useSelector } from 'react-redux';
 import {useDispatch} from 'react-redux'
-import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles';
-import { getFeaturedProduct, getProduct } from '../../../Store/reducers/productReducer';
-import { useSearchParams } from 'react-router-dom';
+import { makeGoodParams, titleConverterToItsPath } from '../../../utiles';
+import { getProduct } from '../../../Store/reducers/productReducer';
+import { ParamCreator, useAddParams, useGetParams } from '../../../hooks/useGetParams';
 
 export const FrameHeader = ({title, dataLength}) => {
-    const [selectValue, setSelectValue] = useState("default")
+    const [selectValue, setSelectValue] = useState('default')
     const loading = useSelector(state => state.products.isLoading)
     const dispatch = useDispatch()
-    const params = useSelector(state => state.products.params)
+    const params = useGetParams()
+    const addParams = useAddParams()
+
 
     const handleSelectChange = e => {
         const selected = e.target.value
         setSelectValue(selected)
-
-        let new_params = makeGoodParams([...params, 
-            new ParamCreator("sort", e.target.value)].filter(item => item.type !== "page"))
-
-        dispatch(getFeaturedProduct(titleConverterToItsPath(title), new_params))
+        addParams([new ParamCreator("sort", selected)])
+        dispatch(getProduct(title !== "Поиск" ? titleConverterToItsPath(title) : "products", params))
     } 
 
   return (
@@ -34,7 +33,7 @@ export const FrameHeader = ({title, dataLength}) => {
             <HeaderRight>
                 <Sorting>
                 <SortTitle>Сортировать:</SortTitle>
-                    <FormControl disabled={loading || !dataLength} sx={{ m: 1, minWidth: 220 }}>
+                    <FormControl disabled={loading} sx={{ m: 1, minWidth: 220 }}>
                         <Select
                             value={selectValue}
                             onChange={handleSelectChange}

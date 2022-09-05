@@ -8,7 +8,7 @@ export const Vegetables = () => {
   
   return (
     <ContentTemple>
-      <ProductFrame  data={vegetables} title={"Овощи"} />
+      <ProductFrame data={vegetables} title={"Овощи"} />
     </ContentTemple>
   )
 }

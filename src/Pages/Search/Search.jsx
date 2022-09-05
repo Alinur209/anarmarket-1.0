@@ -1,25 +1,22 @@
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { useSelector } from 'react-redux'
-import { useLocation, useSearchParams } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { ProductFrame } from '../../Components/ProductFrame/ProductFrame/ProductFrame'
-import { getFeaturedProduct, getProduct, resetActiveProduct, setSearchedProduct } from '../../Store/reducers/productReducer'
+import { getProduct, resetActiveProduct, setSearchedProduct } from '../../Store/reducers/productReducer'
 import ContentTemple from '../../UI/ContentTemple'
-import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../utiles'
+import { titleConverterToItsPath } from '../../utiles'
+import {useGetParams} from '../../hooks/useGetParams'
 
 export const Search = () => {
     const searchedData = useSelector(state => state.products.active)
-    const [searchQuery, setSearchQuery] = useSearchParams()
-    const query = searchQuery.get("q") || ''
-    const params = useSelector(state => state.products.params)
+    const query = useGetParams().find(item => item.type === "search")?.input || ''
+    // const params = useGetParams()
     const dispatch = useDispatch()
 
     useEffect(() => {
-      let new_params = makeGoodParams([...params, new ParamCreator("search", query)].filter(item => item.type !== "max_price" && item.type !== "min_price" && item.type !== "page"))
-
-      dispatch(getFeaturedProduct(titleConverterToItsPath('search'), new_params))
-
-      return () => dispatch(resetActiveProduct())
+      dispatch(setSearchedProduct('products'))
+      return () => dispatch(resetActiveProduct(titleConverterToItsPath("search", "ru")))
     }, [query])
 
   return (
