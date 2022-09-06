@@ -8,7 +8,7 @@ export const LogoSection = () => {
   return (
     <SLogoSection>
         <div>
-          <Logo footer width="300px" />
+          <Logo footer/>
           <Description>
               При создании генератора мы использовали небезизвестный универсальный код речей. Текст генерируется абзацами случайным.
           </Description> 
@@ -19,6 +19,7 @@ export const LogoSection = () => {
 }
 
 const Description = styled.p`
+  max-width: 450px;
     margin: 0;
     font-size: 16px;
     color: #fff;
@@ -27,4 +28,10 @@ const Description = styled.p`
 const SLogoSection = styled(Flex)`
     flex-direction:column;
     gap: 20px;
+    @media (max-width: 972px) {
+      display:flex;
+      flex-direction: column;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
 `

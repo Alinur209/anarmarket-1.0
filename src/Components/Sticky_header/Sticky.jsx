@@ -1,16 +1,24 @@
 import React, { useEffect, useRef, useState } from 'react'
 import styled, { css } from 'styled-components'
+import useMediaQuery from '../../hooks/useMediaQueryHook'
 import ContentTemple from '../../UI/ContentTemple'
 import Flex from '../../UI/Flex'
 import { NavList } from './NavList/NavList'
 import Search from './Search/Search'
+import logo from '../../Media/logo.png'
+import { Logo } from '../Logo/Logo'
 
 export const Sticky = () => {
   const [active, setActive] = useState(false)
+  const isMatch = useMediaQuery("(max-width: 652px)")
 
   window.addEventListener("scroll", () => {
     const scrollPost = window.scrollY
-    setActive(Boolean(scrollPost >= 100)) 
+    if(isMatch) {
+      setActive(Boolean(scrollPost >= 60)) 
+    }else {
+      setActive(Boolean(scrollPost >= 100)) 
+    }
   })
 
   return (
@@ -18,7 +26,8 @@ export const Sticky = () => {
         <ContentTemple>
           <Content>
             <Search />
-            <NavList />
+            {isMatch && <Logo text width={"165px"}/>}
+            <NavList /> 
           </Content>
         </ContentTemple>
     </SSticky>  
@@ -41,7 +50,13 @@ const SSticky = styled.div`
   height: 60px;
   justify-content:space-between;
   align-items: center;
-  // border-bottom: 1px solid #e3e3e3;
+  @media(max-width: 652px) {
+    border-bottom: 1px solid #e3e3e3;
+    ${props => props.active && css`
+      box-shadow: 0 0 10px #e3e3e3;
+      border:none;
+    `};
+  }
   ${props => props.active && css`
       box-shadow: 0 0 10px #e3e3e3;
       border:none;

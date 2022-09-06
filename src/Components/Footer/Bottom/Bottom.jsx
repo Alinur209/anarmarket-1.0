@@ -1,19 +1,19 @@
 import React from 'react'
 import styled from 'styled-components'
 import Flex from '../../../UI/Flex'
-import inst from '../../../Media/Footer/instIcon.svg'
+import inst from '../../../Media/Footer/instagram (2) 1.svg'
 
 export const Bottom = () => {
   return (
     <SBottom>
-        <Text>Anarmarket.kg © 2022 Все права защищены</Text>
+        <Text>Anarmarket.kg © 2022</Text>
         <Inst>
             <InstText>
                 Мы в instagram: 
             </InstText>
             <a href="https://www.instagram.com/anarmarket_kg">
                 <Icon>
-                    <img width="20px" src={inst} alt="" />
+                    <img src={inst} alt="" />
                 </Icon>
             </a>
         </Inst>
@@ -24,15 +24,23 @@ export const Bottom = () => {
 const InstText = styled.span`
     font-size: 16px;
     color: #fff;
+    @media(max-width: 860px) {
+        font-size: 12px;
+    }
 `
 const Icon = styled.div`
-    width: 35px;
-    height: 35px;
-    background: #EFECEA;
-    border-radius: 5px;
+    width: 40px;
+    height: 40px;
+    background: #BF1C3E;
+    border-radius: 100px;
     display: flex;
     justify-content:center;
     align-items:center;
+
+    img {
+        width: 20px;
+    }
+
 `
 const Inst = styled.div`
     display: flex;
@@ -47,6 +55,10 @@ const Text = styled.p`
     &:hover {
         color: #fff;
     }
+
+    @media(max-width: 860px) {
+        font-size: 12px;
+    }
 `
 const SBottom = styled(Flex)`
     width: 100%;
@@ -54,6 +66,7 @@ const SBottom = styled(Flex)`
     border-top: 1px solid #fff;
     opacity: 0.7;
     padding: 15px 0px;
+    align-items:center;
     &:hover {
         color: #fff;
     }

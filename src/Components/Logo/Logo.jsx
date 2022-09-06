@@ -27,7 +27,7 @@ const SLogo = styled.img`
     height: 100%;
 `
 const SLogoContainer = styled(Flex)`
-    width: ${({width}) => width || "250px"};
+    width: ${({width}) => width || "15rem"};
     gap: 10px;
     align-items:center;
     cursor:pointer;

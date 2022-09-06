@@ -6,10 +6,9 @@ import { UnFound } from '../../../UI/UnFound'
 import {useSelector} from 'react-redux'
 import {Skeleton} from '@mui/material'
 import {useDispatch} from 'react-redux'
-import { getProduct, paginateProduct, setProductLoadingTrue, setProductLoadingFalse } from '../../../Store/reducers/productReducer'
-import { titleConverterToItsPath } from '../../../utiles'
-import { useSelect } from '@mui/base'
-import { useGetParams } from '../../../hooks/useGetParams'
+import { getProduct, setProductLoadingTrue, setProductLoadingFalse } from '../../../Store/reducers/productReducer'
+import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles'
+import { Loader } from '../../../UI/Loader'
 
 export const ProductList = ({data, title}) => {
   const dispatch = useDispatch()
@@ -18,35 +17,42 @@ export const ProductList = ({data, title}) => {
   const hasNext = useSelector(state => state.products.active.has_next)
   const lastElement = useRef()
   const observer = useRef()
-  const params = useGetParams(() => page + 1) || []
   const error = useSelector(state => state.products.error)
+  const params = useSelector(state => state.products.params)
+  // const [isFetching, setIsFetching ] = useState(false)
 
   useEffect(() => {
     if(isLoading) return
     if(observer.current) observer.current.disconnect()
+    var options = {
+      rootMargin: '0px 0px 150px 0px',
+    }
     var callback = function(entries, observer) {
       if(entries[0].isIntersecting && hasNext) {
-        dispatch(getProduct(titleConverterToItsPath(title), params))
+        let new_params = makeGoodParams([...params, 
+          new ParamCreator("page", page + 1)
+        ])
+        dispatch(getProduct(titleConverterToItsPath(title), new_params))
       }
     }
-    observer.current = new IntersectionObserver(callback)
+    observer.current = new IntersectionObserver(callback, options)
     observer.current.observe(lastElement.current)
 
-  }, [isLoading, page, hasNext, title, params])
+  }, [isLoading])
 
 
   return (
-      <ContentTemple padding="10px 30px">
-        <SProductList loading={isLoading} isEmptyData={!isLoading && !data.length}>
+      <SContentTemple>
+        <SProductList isEmptyData={!isLoading && !data.length} isLoading={isLoading}>
           {
               data.length ?
                 data.map((item, index) =>
                     <ProductCard key={index}>
                       <CardTop>
-                        <ProductPicture src={"http://localhost:8000" + item.product_image}/>
+                        <ProductPicture loading='lazy' src={"http://localhost:8000" + item.product_image}/>
                       </CardTop>
                       <CardBottom>
-                        <CardTitle>{item.title}</CardTitle>
+                        <CardTitle>{item.title.split('').slice(0, 20).join('')}{item.title.length >= 20 && "..."}</CardTitle>
                         <CardCost>{item.price} с/{item.measurment}</CardCost>
                       </CardBottom>
                     </ProductCard>  
@@ -56,19 +62,25 @@ export const ProductList = ({data, title}) => {
           }
         </SProductList>
         <div style={{height: "20px", width: "100%"}} ref={lastElement}></div>
-        <h1>{error}</h1>
-      </ContentTemple>
+      </SContentTemple>
   )
 }
 
 const CardCost = styled.span`
   font-size: 22px;
   font-weight: bold;
+  @media(max-width: 769px) {
+    font-size: 18px;
+  }
 `
 const CardTitle = styled.h3`
   font-size: 16px;
   max-width: 80%;
   text-align:center;
+  margin: 0;
+  @media(max-width: 769px) {
+    font-size: 14px;
+  }
 `
 const CardBottom = styled(Flex)`
   width: 100%;
@@ -88,8 +100,7 @@ const CardTop = styled.div`
   height: 60%;
 `
 const ProductCard = styled.div`
-  max-height: 200px;
-  min-height: 200px;
+  height: 100%;
   background: #fff; 
   cursor:pointer;
   border: none;
@@ -102,9 +113,35 @@ const ProductCard = styled.div`
 const SProductList = styled.div`
   width: 100%;
   display:grid;
-  grid-template-columns: ${props => props.isEmptyData ? '1fr': '1fr 1fr 1fr'};
+  grid-template-columns: ${props => props.isEmptyData ? '1fr': 'repeat(4, 1fr)'}};
   grid-gap: 10px;
-  ${props => props.loading && css`
-    opacity: 0.3
+  grid-auto-rows: minmax(250px, auto);
+  @media(max-width: 1180px) {
+    grid-template-columns: ${props => props.isEmptyData ? '1fr': 'repeat(4, 1fr)'};
+    grid-auto-rows: minmax(150px, auto);
+  }
+  @media(max-width: 652px) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-auto-rows: minmax(80px, 200px);
+  }
+  @media(max-width: 375px) {
+    grid-template-columns: 1fr;
+  }
+  ${props => props.isLoading && css`
+    opacity: 0.7
   `}
+  ${props => props.isEmptyData && css`
+    grid-template-columns: 1fr;
+  `}
+`
+const SContentTemple = styled(ContentTemple)`
+  padding: 10px 30px;
+  @media(max-width: 1180px) {
+    padding: 0;
+    padding-top: 10px;
+  }
+  @media(max-width: 375px) {
+    padding: 0;
+    padding-top: 10px;
+  }
 `

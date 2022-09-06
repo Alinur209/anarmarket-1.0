@@ -1,12 +1,26 @@
 
+
+
+
 // LOCAL STORAGE
 
 import { useLocation } from "react-router-dom"
 import { navlist } from "../Components/Sticky_header/NavList/NavList"
 
+
+
 export const getLocalStorage = (key) => JSON.parse(localStorage.getItem(key))
 export const removeLocalStorage = (key = "session") => localStorage.removeItem(key)
 export const setLocalStorage = (value, key = "session") => localStorage.setItem(key, JSON.stringify(value))
+
+// ERROR
+
+export class ErrorCreator {
+    constructor(err_code, message) {
+        this.err_code = err_code
+        this.message = message
+    }
+}
 
 // PATH
 
@@ -31,11 +45,21 @@ export const convertPathname = str => {
 
 // PRODUCT
 
+export class ParamCreator {
+    constructor(type, input) {
+        this.type = type
+        this.input = input
+    }
+}
+
+
 export const titleConverterToItsPath = (product, to = "en") => {
-    if(product === "Поиск") {
+    if(product === "search") {
         return "products"
-    }else if(product === "search") {
-        return "Поиск"
+    }else if(product === "search" && to === "ru") {
+        return "поиск"
+    }else if(product === "Поиск") {
+        return "products"
     }
     return (
         to === "ru" ? 
@@ -58,3 +82,7 @@ export const makeGoodParams = arr => {
 }
 
 
+
+// FOOTER 
+
+export const phoneFieldValidator = field => Boolean(Number(field))

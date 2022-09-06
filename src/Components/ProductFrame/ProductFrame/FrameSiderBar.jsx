@@ -1,69 +1,72 @@
 import React, { useMemo, useState, useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import Flex from '../../../UI/Flex'
 import Slider from '@mui/material/Slider';
 import { useSelector } from 'react-redux'
 import {useDispatch} from 'react-redux'
-import { makeGoodParams, titleConverterToItsPath } from '../../../utiles';
-import { getProduct } from '../../../Store/reducers/productReducer';
-import { ParamCreator, useAddParams, useGetParams } from '../../../hooks/useGetParams';
+import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles';
+import { getFeaturedProduct } from '../../../Store/reducers/productReducer';
 
-export const FrameSiderBar = ({max_price, title}) => {
+export const FrameSiderBar = ({max_price = 0, min_price = 0, dataLength, title}) => {
     const loading = useSelector(state => state.products.isLoading)
     const dispatch = useDispatch()
     const [fromState, setFromState] = useState(0)
     const [toState, setToState] = useState(0)
-    const params = useGetParams()
-    const middlePrice = useMemo(() => max_price ? Math.round(max_price / 2):'', [max_price])
-    const addParams = useAddParams()
-
-    const onSliderChange = e => {
+    const middlePrice = useMemo(() => max_price ? Math.round(max_price / 2):0, [max_price])
+    const params = useSelector(state => state.products.params)
+    
+    const onSliderChange = e => {   
         setToState(e.target.value[1])
         setFromState(e.target.value[0])
         
     }
 
     const handleAfterChange = () => {
-        addParams([new ParamCreator("min_price", fromState), new ParamCreator("max_price", toState)])
-        dispatch(getProduct(title !== "Поиск" ? titleConverterToItsPath(title) : "products", params))
+        let new_params = makeGoodParams([...params, 
+            new ParamCreator("min_price", fromState),  
+            new ParamCreator("max_price", toState 
+        )].filter(item => item.type !== "page")) 
+
+        dispatch(getFeaturedProduct(titleConverterToItsPath(title), new_params))
     }
     
     const handleReset = () => {
-        dispatch(getProduct(title))
+        let new_params = makeGoodParams([...params].filter(item => item.type !== "max_price" && item.type !== "min_price"))
+        dispatch(getFeaturedProduct(titleConverterToItsPath(title), new_params))
         setToState(max_price)
-        setFromState(0)
+        setFromState(min_price)
     }
 
     useEffect(() => {
         setToState(max_price)
-    }, [max_price])
-
+        setFromState(min_price)
+    }, [max_price, min_price])
 
   return (
-    <SFrameSiderBar>
+    <SFrameSiderBar loading={loading}>
         <Wrapper>
             <Flex width="100%" justify="space-between">
                 <SliderTitle>Цена</SliderTitle>
                 {
-                    (fromState !== 0 || toState !== max_price) && <ResetBtn onClick={handleReset}><span>&times;</span>cбросить</ResetBtn>
+                    (title && (fromState !== min_price || toState !== max_price)) && <ResetBtn onClick={handleReset}><span>&times;</span>cбросить</ResetBtn>
                 }
             </Flex>
             <SliderAreaLabels>  
                 <Label>{fromState} - {toState}+</Label>
             </SliderAreaLabels>
             <SliderBars>
-                <ConfigurePrice>{0}</ConfigurePrice>
+                <ConfigurePrice>{min_price}</ConfigurePrice>
                 <ConfigurePrice>{middlePrice}</ConfigurePrice>
                 <ConfigurePrice>{max_price}</ConfigurePrice>
             </SliderBars>
             <Slider 
                     key={`slider-${title}`}
-                    min={0}
+                    min={min_price}
                     max={max_price}    
                     value={[fromState, toState]}
                     onChange={onSliderChange}
-                    valueLabelDisplay="auto"
                     onChangeCommitted={handleAfterChange}
+                    disabled={loading || !dataLength}
             />
         </Wrapper>
     </SFrameSiderBar>
@@ -123,4 +126,8 @@ const SFrameSiderBar = styled(Flex)`
     max-width: 100%;
     border-right: 1px solid #EFECEA;
     min-height: 400px;
+
+    ${props => props.loading && css`
+        opacity: 0.7
+    `}
 `

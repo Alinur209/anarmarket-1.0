@@ -13,6 +13,9 @@ const SFlex = styled.div`
     box-shadow: ${({shadow}) => shadow || ""};
     border-radius: ${({radius}) => radius || ""};
     border: ${({border}) => border || ""};
+    ${props => props.wrap && css`
+        flex-wrap: wrap;
+    `};
     ${props => props.topLine && css`
         border-top:1px solid #e3e3e3;
     `};
