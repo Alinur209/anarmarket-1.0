@@ -16,9 +16,7 @@ export const navlist = [
   {title: "Мясо", path: "meat"},
   {title: "Рыба", path: "fish"},
   {title: "Напитки", path: "drinks"},
-  {title: "О нас", path: "about"},
-
-    // {title: "Акции", path: "actions"},
+  // {title: "Акции", path: "actions"},
   // {title: "Блог", path: "blog"},
 ]
 

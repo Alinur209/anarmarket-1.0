@@ -9,7 +9,6 @@ const AppRouter = () => {
         window.scrollTo(0,0)
     }, [location.pathname])
     
-
   return (  
       <>
         <Routes>
@@ -19,12 +18,13 @@ const AppRouter = () => {
                             key={route.path}
                             path={route.path}
                             element={route.element} 
+                            exact
                         />    
                     )
                 }
                 <Route
                     path="*"
-                    element={<Navigate to="/" replace />}
+                    element={<Navigate to="/" replace exact/>}
                 />
             </Routes>
       </>

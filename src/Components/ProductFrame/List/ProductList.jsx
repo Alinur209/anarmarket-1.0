@@ -10,7 +10,7 @@ import { getProduct, setProductLoadingTrue, setProductLoadingFalse } from '../..
 import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles'
 import { Loader } from '../../../UI/Loader'
 
-export const ProductList = ({data, title}) => {
+export const ProductList = ({data = [], title}) => {
   const dispatch = useDispatch()
   const isLoading = useSelector(state => state.products.isLoading)
   const page = useSelector(state => state.products.active.page)
@@ -49,7 +49,7 @@ export const ProductList = ({data, title}) => {
                 data.map((item, index) =>
                     <ProductCard key={index}>
                       <CardTop>
-                        <ProductPicture loading='lazy' src={"http://localhost:8000" + item.product_image}/>
+                        <ProductPicture loading='lazy' src={process.env.REACT_APP_MEDIA_ENDPOINT + item.product_image}/>
                       </CardTop>
                       <CardBottom>
                         <CardTitle>{item.title.split('').slice(0, 20).join('')}{item.title.length >= 20 && "..."}</CardTitle>
@@ -58,7 +58,8 @@ export const ProductList = ({data, title}) => {
                     </ProductCard>  
                 )
               :
-                <UnFound />
+              !isLoading && 
+              <UnFound />
           }
         </SProductList>
         <div style={{height: "20px", width: "100%"}} ref={lastElement}></div>
@@ -124,17 +125,22 @@ const SProductList = styled.div`
     grid-template-columns: repeat(2, 1fr);
     grid-auto-rows: minmax(80px, 200px);
   }
+   @media(max-width: 652px) {
+    grid-auto-rows: minmax(80px, 200px);
+    grid-template-columns: ${({isEmptyData}) => isEmptyData ? "1fr": "repeat(2, 1fr)"}
+  }
   @media(max-width: 375px) {
     grid-template-columns: 1fr;
   }
   ${props => props.isLoading && css`
-    opacity: 0.7
+    opacity: 0.7;
   `}
   ${props => props.isEmptyData && css`
     grid-template-columns: 1fr;
   `}
 `
 const SContentTemple = styled(ContentTemple)`
+  width: 100%;
   padding: 10px 30px;
   @media(max-width: 1180px) {
     padding: 0;

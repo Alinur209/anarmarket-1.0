@@ -1,5 +1,5 @@
 import { Header } from "./Components/Header/Header";
-import AppRouter from './AppRouter/AppRouter'
+import AppRouter from './AppRouter/AppRouter.jsx'
 import { Sticky } from "./Components/Sticky_header/Sticky";
 import { Footer } from "./Components/Footer/Footer";
 import { Path } from "./Components/Path/Path";

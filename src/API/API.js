@@ -1,7 +1,8 @@
 import axios from "axios"
 import { ErrorCreator } from "../utiles"
 
-const ENDPOINT = "http://localhost:8000/api/"
+
+const ENDPOINT = process.env.REACT_APP_ENDPOINT
 
 const productFetcher = async (request, point, params = []) => {
     let path = ENDPOINT + point + "/"
@@ -20,7 +21,7 @@ export default class API {
             const response = await productFetcher("get", product, params)
             return {status: true, response}
         }catch(e) {
-            console.log("Error: ", e.message)
+            console.error("Error: ", e.message)
             return {status: false, data: null, error: e.message}
         }
     }
@@ -29,7 +30,7 @@ export default class API {
             const response = await axios.post(ENDPOINT + "contact_form/", body)
             return response.data
         }catch(e) {
-            console.log("Error in form-message sending: ", e.message)
+            console.error("Error in form-message sending: ", e.message)
         }
     }
     static async getPartners() {
