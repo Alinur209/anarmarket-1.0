@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react'
-import styled from 'styled-components'
+import styled, {css} from 'styled-components'
 import Flex from '../../../UI/Flex';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -10,8 +10,13 @@ import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../
 import { getFeaturedProduct } from '../../../Store/reducers/productReducer';
 import useMediaQuery from '../../../hooks/useMediaQueryHook';
 import filter_logo from '../../../Media/ProductFrame/filter.png'
+import { FrameSiderBar } from './FrameSiderBar'
+import Popover from '@mui/material/Popover';
+import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import Button from '@mui/material/Button';
 
-export const FrameHeader = ({title, dataLength}) => {
+
+export const FrameHeader = ({title, data}) => {
     const [quanity, setQuanity] = useState("   ")
     const [selectValue, setSelectValue] = useState("default")
     const loading = useSelector(state => state.products.isLoading)
@@ -23,8 +28,8 @@ export const FrameHeader = ({title, dataLength}) => {
     const minFormWidth = isTablet ? 200:220
 
     useEffect(() => {
-        setQuanity(dataLength)
-    }, [dataLength])
+        setQuanity(data.max_length)
+    }, [data.max_length])
 
     const handleSelectChange = e => {
         const selected = e.target.value
@@ -37,14 +42,42 @@ export const FrameHeader = ({title, dataLength}) => {
     } 
 
   return (
-    <SFrameHeader>
+    <SFrameHeader isMatch={isMatch}>
             <HeaderLeft>
-                <Title>{title} {!(loading || !dataLength) && <Quanity>({quanity})</Quanity>}</Title>
+                <Title>{title} {!(loading || !data.max_length) && <Quanity>({quanity})</Quanity>}</Title>
             </HeaderLeft>
-            <HeaderRight>
+            <HeaderRight isMatch={isMatch}>
+                {
+                    isMatch && 
+                    <FormControl disabled={loading || !data.max_length} sx={{ m: 1, minWidth: 'auto', maxWidth: minFormWidth }}>
+                        <PopupState variant="popover" popupId="demo-popup-popover">
+                        {(popupState) => (
+                            <div>
+                                <PopUpBtn {...bindTrigger(popupState)}>
+                                    <span>Цена</span>
+                                    <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropDownIcon"><path d="M7 10l5 5 5-5z"></path></svg>
+                                </PopUpBtn>
+                            <Popover
+                                {...bindPopover(popupState)}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'center',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'center',
+                                }}
+                            >
+                                <FrameSiderBar min_price={data.min_price} data={data} max_price={data.max_price} title={title} />
+                            </Popover>
+                            </div>
+                        )}
+                        </PopupState>
+                    </FormControl>
+                }
                 <Sorting>
                 {!isMatch && <SortTitle>Сортировать:</SortTitle>}
-                    <FormControl disabled={loading || !dataLength} sx={{ m: 1, minWidth: minFormWidth, maxWidth: 500 }}>
+                    <FormControl disabled={loading || !data.max_length} sx={{ m: 1, minWidth: minFormWidth, maxWidth: 500 }}>
                         <Select
                             value={selectValue}
                             onChange={handleSelectChange}
@@ -59,16 +92,22 @@ export const FrameHeader = ({title, dataLength}) => {
                     </FormControl>
                 </Sorting>
             </HeaderRight>
-            {
-                isMatch && 
-                    <>
-                        Цена: 
-                    </>
-            }
     </SFrameHeader>
   )
 }
 
+const PopUpBtn = styled.button`
+    width: 100px;
+    background-color: #fff;
+    border-radius:5px;
+    border: 1px solid #000;
+    color: #000;
+    box-shadow: none; 
+    font-size: 16px;
+    font-family: Ununtu, sans-serif;
+    text-transform: none;
+    padding: 7.5px 14px;
+`
 const SortTitle = styled.span`
     font-size: 16px;
     font-weight: bold;
@@ -86,8 +125,13 @@ const HeaderLeft = styled(Flex)`
     align-items:center;
 `
 const HeaderRight = styled(Flex)`
-    align-items: center;
     height: 100%;
+    align-items: center;
+
+    ${props => props.isMatch && css`
+        width: 100%;
+        justify-content: space-between;
+    `}
 `
 const Quanity = styled.span`
     opacity: 0.7
@@ -99,7 +143,6 @@ const Title = styled.h3`
     gap: 10px;
     @media(max-width: 1180px) {
         font-size: 20px;
-
     }
 `
 
@@ -112,4 +155,8 @@ const SFrameHeader = styled.div`
     justify-content: space-between;
     border-bottom: 1px solid #EFECEA;
 
+    ${props => props.isMatch && css`
+        display:grid;
+        grid-template-columns: 1fr 3fr;
+    `}
 `

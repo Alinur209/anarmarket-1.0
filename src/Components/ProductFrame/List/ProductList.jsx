@@ -49,11 +49,11 @@ export const ProductList = ({data = [], title}) => {
                 data.map((item, index) =>
                     <ProductCard key={index}>
                       <CardTop>
-                        <ProductPicture loading='lazy' src={process.env.REACT_APP_MEDIA_ENDPOINT + item.product_image}/>
+                        <ProductPicture loading='lazy' src={item.image}/>
                       </CardTop>
                       <CardBottom>
                         <CardTitle>{item.title.split('').slice(0, 20).join('')}{item.title.length >= 20 && "..."}</CardTitle>
-                        <CardCost>{item.price} с/{item.measurment}</CardCost>
+                        <CardCost>{item.price} с/{item.measurement}</CardCost>
                       </CardBottom>
                     </ProductCard>  
                 )
@@ -107,6 +107,7 @@ const ProductCard = styled.div`
   border: none;
   border: 1px solid #fff;
   box-shadow: 0 0 5px #e3e3e3;
+  border-radius: 5px;
   &:hover {
     box-shadow: 0 0 15px #e3e3e3;
   }

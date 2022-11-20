@@ -9,7 +9,7 @@ export const List = ({data}) => {
                 <Item key={item.name}>
                     <PartnerPircture>
                         <img 
-                            src={"http://localhost:8000" + item.partner_image}
+                            src={item.image}
                             alt=""
                         />
                     </PartnerPircture>

@@ -32,7 +32,7 @@ export const Banner = () => {
                 >
                     {
                         banners.map((banner, index) => 
-                            <Item key={index} src={"http://localhost:8000" + banner.img} />
+                            <Item key={index} src={banner.image} />
                         )
                     }
                 </SCarousel>    

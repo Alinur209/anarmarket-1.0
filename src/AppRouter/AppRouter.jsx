@@ -24,7 +24,7 @@ const AppRouter = () => {
                 }
                 <Route
                     path="*"
-                    element={<Navigate to="/" replace exact/>}
+                    element={<Navigate to="/" replace/>}
                 />
             </Routes>
       </>

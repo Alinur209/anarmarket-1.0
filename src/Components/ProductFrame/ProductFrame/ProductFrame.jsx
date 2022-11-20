@@ -13,10 +13,10 @@ export const ProductFrame = ({data, title}) => {
 
   return (
     <SProductFrame>
-        <FrameHeader title={title} dataLength={data.max_length} />
+        <FrameHeader data={data} title={title} dataLength={data.max_length} />
         <Grid data={Boolean(data?.length)}> 
           {
-              !isMatch && <FrameSiderBar  min_price={data.min_price} dataLength={data.max_length} max_price={data.max_price} title={title} />
+              !isMatch && <FrameSiderBar  min_price={data.min_price} data={data} max_price={data.max_price} title={title} />
           }
           <ProductList title={title} data={data?.list} />
         </Grid> 

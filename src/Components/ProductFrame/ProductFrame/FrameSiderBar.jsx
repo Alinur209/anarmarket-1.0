@@ -7,7 +7,7 @@ import {useDispatch} from 'react-redux'
 import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles';
 import { getFeaturedProduct } from '../../../Store/reducers/productReducer';
 
-export const FrameSiderBar = ({max_price = 0, min_price = 0, dataLength, title}) => {
+export const FrameSiderBar = ({max_price = 0, min_price = 0, data, title}) => {
     const loading = useSelector(state => state.products.isLoading)
     const dispatch = useDispatch()
     const [fromState, setFromState] = useState(0)
@@ -66,7 +66,7 @@ export const FrameSiderBar = ({max_price = 0, min_price = 0, dataLength, title})
                     value={[fromState, toState]}
                     onChange={onSliderChange}
                     onChangeCommitted={handleAfterChange}
-                    disabled={loading || !dataLength}
+                    disabled={loading || !data.max_length}
             />
         </Wrapper>
     </SFrameSiderBar>
