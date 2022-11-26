@@ -9,11 +9,8 @@ import {useDispatch} from 'react-redux'
 import { makeGoodParams, ParamCreator, titleConverterToItsPath } from '../../../utiles';
 import { getFeaturedProduct } from '../../../Store/reducers/productReducer';
 import useMediaQuery from '../../../hooks/useMediaQueryHook';
-import filter_logo from '../../../Media/ProductFrame/filter.png'
-import { FrameSiderBar } from './FrameSiderBar'
 import Popover from '@mui/material/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
-import Button from '@mui/material/Button';
 
 
 export const FrameHeader = ({title, data}) => {
@@ -68,7 +65,7 @@ export const FrameHeader = ({title, data}) => {
                                     horizontal: 'center',
                                 }}
                             >
-                                <FrameSiderBar min_price={data.min_price} data={data} max_price={data.max_price} title={title} />
+                                
                             </Popover>
                             </div>
                         )}
@@ -76,7 +73,7 @@ export const FrameHeader = ({title, data}) => {
                     </FormControl>
                 }
                 <Sorting>
-                {!isMatch && <SortTitle>Сортировать:</SortTitle>}
+                {!isTablet && <SortTitle>Сортировать:</SortTitle>}
                     <FormControl disabled={loading || !data.max_length} sx={{ m: 1, minWidth: minFormWidth, maxWidth: 500 }}>
                         <Select
                             value={selectValue}
@@ -107,6 +104,8 @@ const PopUpBtn = styled.button`
     font-family: Ununtu, sans-serif;
     text-transform: none;
     padding: 7.5px 14px;
+    text-align:left;
+    padding-left:14px;
 `
 const SortTitle = styled.span`
     font-size: 16px;
