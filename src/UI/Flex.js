@@ -13,6 +13,7 @@ const SFlex = styled.div`
     box-shadow: ${({shadow}) => shadow || ""};
     border-radius: ${({radius}) => radius || ""};
     border: ${({border}) => border || ""};
+    padding: ${({padding}) => padding || "0"};
     ${props => props.wrap && css`
         flex-wrap: wrap;
     `};

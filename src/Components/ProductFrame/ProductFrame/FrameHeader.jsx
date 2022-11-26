@@ -11,6 +11,7 @@ import { getFeaturedProduct } from '../../../Store/reducers/productReducer';
 import useMediaQuery from '../../../hooks/useMediaQueryHook';
 import Popover from '@mui/material/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
+import { PriceFilter } from './Filters/PriceFilter';
 
 
 export const FrameHeader = ({title, data}) => {
@@ -20,9 +21,14 @@ export const FrameHeader = ({title, data}) => {
     const dispatch = useDispatch()
     const params = useSelector(state => state.products.params)
     const isMatch = useMediaQuery("(max-width: 1180px)")
-    const [open, setOpen] = useState(false)
     const isTablet = useMediaQuery("(max-width: 769px)")
     const minFormWidth = isTablet ? 200:220
+    const max_price = data.max_price
+    const min_price = data.min_price
+
+    useEffect(() => {
+        
+    }, [params])
 
     useEffect(() => {
         setQuanity(data.max_length)
@@ -65,8 +71,10 @@ export const FrameHeader = ({title, data}) => {
                                     horizontal: 'center',
                                 }}
                             >
-                                
-                            </Popover>
+                                <Flex width="220px" padding="15px">
+                                    <PriceFilter max_price={max_price} min_price={min_price} data={data} title={title}  />
+                                </Flex>
+                            </Popover>                                            
                             </div>
                         )}
                         </PopupState>
