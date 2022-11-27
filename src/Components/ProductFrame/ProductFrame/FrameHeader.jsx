@@ -12,7 +12,7 @@ import useMediaQuery from '../../../hooks/useMediaQueryHook';
 import Popover from '@mui/material/Popover';
 import PopupState, { bindTrigger, bindPopover } from 'material-ui-popup-state';
 import { PriceFilter } from './Filters/PriceFilter';
-
+import arrow from '../../../Media/Header/drop-down-arrow.png'
 
 export const FrameHeader = ({title, data}) => {
     const [quanity, setQuanity] = useState("   ")
@@ -52,7 +52,7 @@ export const FrameHeader = ({title, data}) => {
                             <div>
                                 <PopUpBtn {...bindTrigger(popupState)}>
                                     <span>Цена</span>
-                                    <svg class="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium MuiSelect-icon MuiSelect-iconOutlined css-hfutr2-MuiSvgIcon-root-MuiSelect-icon" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="ArrowDropDownIcon"><path d="M7 10l5 5 5-5z"></path></svg>
+                                    <img src={arrow} alt="" style={{width:"10px", height: "10px"}}/>
                                 </PopUpBtn>
                             <Popover
                                 {...bindPopover(popupState)}
@@ -108,6 +108,9 @@ const PopUpBtn = styled.button`
     padding: 7.5px 14px;
     text-align:left;
     padding-left:14px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
 `
 const SortTitle = styled.span`
     font-size: 16px;
