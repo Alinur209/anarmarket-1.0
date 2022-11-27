@@ -15,7 +15,7 @@ export const PriceFilter = ({max_price = 0, min_price = 0, data, title}) => {
     const middlePrice = useMemo(() => max_price ? Math.round(max_price / 2):0, [max_price])
     const params = useSelector(state => state.products.params)
     const isMatch = useMediaQuery("(max-width: 1180px)")
-    
+
     const onSliderChange = e => {   
         setToState(e.target.value[1])
         setFromState(e.target.value[0])   
@@ -38,8 +38,14 @@ export const PriceFilter = ({max_price = 0, min_price = 0, data, title}) => {
     }
 
     useEffect(() => {
-        setToState(max_price)
-        setFromState(min_price)
+        if(params.some(item => item.type === "max_price")) {
+            setToState(params.find(item => item.type === "max_price")["input"])
+            setFromState(params.find(item => item.type === "min_price")["input"])
+        }else {
+            setToState(max_price)
+            setFromState(min_price)
+        }
+
     }, [max_price, min_price])
   
     return (

@@ -1,9 +1,6 @@
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { useSearchParams } from "react-router-dom"
-import { getProduct, resetActiveProduct, toggleProductLoading } from "../Store/reducers/productReducer"
-import { convertPathname, titleConverterToItsPath } from "../utiles"
-
+import { getProduct, resetActiveProduct } from "../Store/reducers/productReducer"
 
 const useProductListHook = (product) => {
     const active = useSelector(state => state.products.active)
