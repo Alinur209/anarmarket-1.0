@@ -33,6 +33,10 @@ export const convertPathname = str => {
                 result.splice(j, 1, link.title)
             }else if(item === "search") {
                 result.splice(j, 1, "поиск")
+            }else if(item === "about") {
+                result.splice(j, 1, "о нас")
+            }else if(item === "delivery") {
+                result.splice(j, 1, "доставка")
             }
         })
     })

@@ -9,6 +9,7 @@ export const InformationSection = () => {
 
   const list = [
     {path: '/about', text: "О нас"},
+    {path: '/delivery', text: "Доставка"},
     // {path: '/blog', text: "Блог"},
     // {path: '/actions', text: "Акции"},
   ]

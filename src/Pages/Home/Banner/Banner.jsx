@@ -51,7 +51,8 @@ const Item = styled.div`
     background-position: background-position: left center;
     background-repeat: no-repeat;
     height: 40vw;
-    vertical-align:top
+    vertical-align:top;
+    border-radius: 5px;
 `
 const SBanner = styled(Flex)`
     width: 100%;

@@ -1,6 +1,7 @@
 import { About } from "../Pages/About/About"
 import { Actions } from "../Pages/Actions/Actions"
 import { Blog } from "../Pages/Blog/Blog"
+import { Delivery } from "../Pages/Delivery/Delivery"
 import { Drinks } from "../Pages/Drinks/Drinks"
 import { Fish } from "../Pages/Fish/Fish"
 import { Fruits } from "../Pages/Fruits/Fruits"
@@ -24,6 +25,7 @@ const routes = [
     {path: "/drinks", element: <Drinks />},
     {path: "/", element: <Home />},
     {path: "/search/", element: <Search />},
+    {path: "/delivery/", element: <Delivery />},
     // {path: "/actions", element: <Actions />},
     // {path: "/blog", element:<Blog />},
 ]

@@ -7,15 +7,10 @@ export const List = ({data}) => {
         {
             data?.map(item => 
                 <Item key={item.name}>
-                    <PartnerPircture>
-                        <img 
-                            src={item.image}
-                            alt=""
-                        />
-                    </PartnerPircture>
-                    <PartnerName>
-                        {item.name}
-                    </PartnerName>
+                    <img 
+                        src={item.image}
+                        alt=""
+                    />
                 </Item>    
             )
         }
@@ -23,36 +18,25 @@ export const List = ({data}) => {
   )
 }
 
-const PartnerName = styled.h3`
-    margin: 0;
-    font-size: 24px;
-`
-const PartnerPircture = styled.div`
-    border-radius: 100px;
+const Item = styled.li`
+    list-style: none;
     width: 7rem;
-
+    border-radius: 100%;
     img {
         width: 100%;
         height: 100%;
-        object-fit:cover;
+        object-fit:contain;
         background-position:center;
     }
 `
-const Item = styled.li`
-    list-style: none;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-`
 const SList = styled.ul`
     margin: none;
-    display:flex;
-    flex-wrap:wrap;
-    gap: 15px;
-
+    width: 100%;
+    display:grid;
+    grid-gap: 30px;
+    grid-template-columns: repeat(auto-fit, 100px);
+    align-items:center;
     @media(max-width: 375px) {
         width: 100%;
-        justify-content:center;
     }
 `

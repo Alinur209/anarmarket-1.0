@@ -1,11 +1,10 @@
 import React from 'react'
 import ContentTemple from '../../UI/ContentTemple'
 
-
-export const Catalog = () => {
+export const Delivery = () => {
   return (
-    <ContentTemple pt>
-        <h1>Каталог</h1>
+    <ContentTemple>
+        <h1>Доставка</h1>  
     </ContentTemple>
   )
 }
